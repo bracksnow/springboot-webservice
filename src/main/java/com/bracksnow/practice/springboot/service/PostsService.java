@@ -35,12 +35,9 @@ public class PostsService {
 
     @Transactional
     public void delete (Long id){
-        try {
-            postsRepository.deleteById(id);
-            System.out.println("해당 게시글은 삭제되었습니다");
-        }catch(Exception e){
-            System.out.println("해당 게시글이 없습니다"+ e);
-        }
+        Posts posts = postsRepository.findById(id).orElseThrow(()-> new IllegalArgumentException("해당 게시글이 없습니다. id = "+ id));
+        postsRepository.delete(posts);
+
 
     }
 }
